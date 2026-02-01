@@ -1,5 +1,5 @@
 import { generateText } from 'ai';
-import { openai } from '@ai-sdk/openai';
+import { google } from '@ai-sdk/google';
 import { protocolEngine } from "@/utils/protocolEngine";
 
 export async function POST(req: Request) {
@@ -10,7 +10,7 @@ export async function POST(req: Request) {
             return new Response("No markers provided", { status: 400 });
         }
 
-        const apiKey = process.env.OPENAI_API_KEY;
+        const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
 
         // Ensure engine is initialized
         await protocolEngine.init();
@@ -64,7 +64,7 @@ export async function POST(req: Request) {
       5. Output ONLY the markdown text.`;
 
         const { text } = await generateText({
-            model: openai('gpt-4o'),
+            model: google('gemini-1.5-flash'),
             system: systemPrompt,
             prompt: userPrompt,
         });
