@@ -29,13 +29,18 @@ export function AIRecommendations({ markers }: AIRecommendationsProps) {
                 method: 'POST',
                 body: JSON.stringify({ markers }), // matches API expectation
             })
-                .then(res => res.json())
+                .then(async res => {
+                    const data = await res.json();
+                    if (!res.ok) throw new Error(data.details || data.error || "API Error");
+                    return data;
+                })
                 .then(data => {
                     setRecommendations(data.text);
                     setLoading(false);
                 })
                 .catch(err => {
                     console.error(err);
+                    setRecommendations(`**Error**: ${err.message}`);
                     setLoading(false);
                 });
         }

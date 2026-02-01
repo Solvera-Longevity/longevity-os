@@ -71,9 +71,12 @@ export async function POST(req: Request) {
 
         return new Response(JSON.stringify({ text }), { status: 200 });
 
-    } catch (error) {
+    } catch (error: any) {
         console.error(error);
-        return new Response(JSON.stringify({ error: 'Failed to generate recommendations' }), { status: 500 });
+        return new Response(JSON.stringify({
+            error: 'Failed to generate recommendations',
+            details: error.message || String(error)
+        }), { status: 500 });
     }
 }
 
