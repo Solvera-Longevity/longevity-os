@@ -64,7 +64,7 @@ export async function POST(req: Request) {
       5. Output ONLY the markdown text.`;
 
         const { text } = await generateText({
-            model: google('gemini-1.5-flash'),
+            model: google('models/gemini-2.0-flash'),
             system: systemPrompt,
             prompt: userPrompt,
         });
