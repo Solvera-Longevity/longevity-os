@@ -1,0 +1,276 @@
+[
+    {
+        "id": "glucose",
+        "label": "Glucose",
+        "unit": "mg/dL",
+        "category": "Metabolic Health",
+        "slider": {
+            "max": 200
+        },
+        "thresholds": {
+            "green": {
+                "min": 70,
+                "max": 90
+            },
+            "yellow": {
+                "min": 90,
+                "max": 105
+            },
+            "red": {
+                "max": 70,
+                "min": 105
+            }
+        }
+    },
+    {
+        "id": "hba1c",
+        "label": "HbA1c",
+        "unit": "%",
+        "category": "Metabolic Health",
+        "slider": {
+            "max": 12
+        },
+        "thresholds": {
+            "green": {
+                "min": 0,
+                "max": 5.6
+            },
+            "yellow": {
+                "min": 5.7,
+                "max": 6.4
+            },
+            "red": {
+                "min": 6.5
+            }
+        }
+    },
+    {
+        "id": "crp",
+        "label": "C-Reactive Protein (hs-CRP)",
+        "unit": "mg/L",
+        "category": "Inflammation",
+        "slider": {
+            "max": 10
+        },
+        "thresholds": {
+            "green": {
+                "min": 0,
+                "max": 1.0
+            },
+            "yellow": {
+                "min": 1.0,
+                "max": 3.0
+            },
+            "red": {
+                "min": 3.0
+            }
+        }
+    },
+    {
+        "id": "albumin",
+        "label": "Albumin",
+        "unit": "g/dL",
+        "category": "Liver/Kidney Health",
+        "slider": {
+            "max": 7
+        },
+        "thresholds": {
+            "green": {
+                "min": 4.0,
+                "max": 5.0
+            },
+            "yellow": {
+                "min": 3.5,
+                "max": 4.0
+            },
+            "red": {
+                "max": 3.5,
+                "min": 5.0
+            }
+        }
+    },
+    {
+        "id": "creatinine",
+        "label": "Creatinine",
+        "unit": "mg/dL",
+        "category": "Liver/Kidney Health",
+        "slider": {
+            "max": 5
+        },
+        "thresholds": {
+            "green": {
+                "min": 0.6,
+                "max": 1.1
+            },
+            "yellow": {
+                "min": 1.1,
+                "max": 1.3
+            },
+            "red": {
+                "min": 1.3,
+                "max": 0.6
+            }
+        }
+    },
+    {
+        "id": "alp",
+        "label": "Alkaline Phosphatase (ALP)",
+        "unit": "U/L",
+        "category": "Liver/Kidney Health",
+        "slider": {
+            "max": 300
+        },
+        "thresholds": {
+            "green": {
+                "min": 44,
+                "max": 147
+            },
+            "yellow": {
+                "min": 147,
+                "max": 160
+            },
+            "red": {
+                "min": 160,
+                "max": 44
+            }
+        }
+    },
+    {
+        "id": "wbc",
+        "label": "White Blood Cells (WBC)",
+        "unit": "1000/uL",
+        "category": "Inflammation",
+        "slider": {
+            "max": 18
+        },
+        "thresholds": {
+            "green": {
+                "min": 4.5,
+                "max": 11.0
+            },
+            "yellow": {
+                "min": 3.5,
+                "max": 4.5
+            },
+            "red": {
+                "max": 3.5,
+                "min": 11.0
+            }
+        }
+    },
+    {
+        "id": "mcv",
+        "label": "Mean Corpuscular Volume (MCV)",
+        "unit": "fL",
+        "category": "Blood Health",
+        "slider": {
+            "max": 125
+        },
+        "thresholds": {
+            "green": {
+                "min": 80,
+                "max": 96
+            },
+            "yellow": {
+                "min": 96,
+                "max": 100
+            },
+            "red": {
+                "min": 100,
+                "max": 80
+            }
+        }
+    },
+    {
+        "id": "rdw",
+        "label": "Red Cell Distribution Width (RDW)",
+        "unit": "%",
+        "category": "Blood Health",
+        "slider": {
+            "max": 25
+        },
+        "thresholds": {
+            "green": {
+                "min": 11.5,
+                "max": 14.5
+            },
+            "yellow": {
+                "min": 14.5,
+                "max": 15.5
+            },
+            "red": {
+                "min": 15.5,
+                "max": 11.5
+            }
+        }
+    },
+    {
+        "id": "lymphocytes_percent",
+        "label": "Lymphocyte %",
+        "unit": "%",
+        "category": "Immune Health",
+        "slider": {
+            "max": 100
+        },
+        "thresholds": {
+            "green": {
+                "min": 20,
+                "max": 40
+            },
+            "yellow": {
+                "min": 15,
+                "max": 20
+            },
+            "red": {
+                "max": 15,
+                "min": 40
+            }
+        }
+    },
+    {
+        "id": "vit_d",
+        "label": "Vitamin D",
+        "unit": "ng/mL",
+        "category": "Nutrient Status",
+        "slider": {
+            "max": 150
+        },
+        "thresholds": {
+            "green": {
+                "min": 50,
+                "max": 80
+            },
+            "yellow": {
+                "min": 30,
+                "max": 50
+            },
+            "red": {
+                "max": 30,
+                "min": 100
+            }
+        }
+    },
+    {
+        "id": "vit_b12",
+        "label": "Vitamin B12",
+        "unit": "pg/mL",
+        "category": "Nutrient Status",
+        "slider": {
+            "max": 1500
+        },
+        "thresholds": {
+            "green": {
+                "min": 500,
+                "max": 900
+            },
+            "yellow": {
+                "min": 300,
+                "max": 500
+            },
+            "red": {
+                "max": 300,
+                "min": 1100
+            }
+        }
+    }
+]

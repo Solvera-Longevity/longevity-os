@@ -1,0 +1,10 @@
+Biomarker,Condition,Peptide,Mechanism,Lifestyle_Lever
+hs-CRP,Systemic Inflammation,Thymosin alpha-1,"Modulates the innate immune system by augmenting T-cell function and reducing pro-inflammatory cytokines like IL-6.",Cold Plunge (11°C, 3min)
+CRP,Systemic Inflammation,Thymosin alpha-1,"Modulates the innate immune system by augmenting T-cell function and reducing pro-inflammatory cytokines.",Cold Plunge (11°C, 3min)
+Glucose,Metabolic Dysregulation,Berberine,"Activates AMPK (adenosine monophosphate-activated protein kinase), mimicking the metabolic effects of exercise and fasting to improve insulin sensitivity.",Zone 2 Cardio (45min)
+HbA1c,Insulin Resistance,Metformin,"Inhibits hepatic gluconeogenesis and improves peripheral insulin sensitivity, reducing basal blood glucose levels.",Low Carbohydrate Diet
+LDL,Hyperlipidemia,PCSK9 Inhibitor,"Inhibits PCSK9 protein to increase LDL receptor recycling on liver cells, dramatically lowering sustained circulating LDL-C.",Fiber Intake (>30g/day)
+WBC,Immune Dysregulation,BPC-157,"A gastric pentadecapeptide that promotes systemic healing through angiogenesis (new blood vessel formation) and modulating inflammatory pathways.",Sleep Optimization (>7.5h)
+Alkaline Phosphatase,Liver Stress,TUDCA,"A hydrophilic bile acid that acts as a chemical chaperone to reduce endoplasmic reticulum (ER) stress in liver cells.",Alcohol Cessation
+Vitamin D,Deficiency,Vitamin D3+K2,"Regulates calcium homeostasis and modulates over 1000 genes related to immune function and cellular longevity.",Morning Sunlight (20min)
+Ferritin,Iron Overload,Therapeutic Phlebotomy,"Mechanical reduction of iron stores to prevent oxidative stress and ferroptosis in tissues.",Limit Red Meat
