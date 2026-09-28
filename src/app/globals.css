@@ -1,24 +1,29 @@
 @import "tailwindcss";
 
 :root {
-  /* Default to dark mode for concierge feel */
-  --background: #0a0a0a;
-  --foreground: #ededed;
+  /* Dark mode clinical baseline */
+  --background: #090b10;
+  --foreground: #f1f3f7;
   
-  /* Gold Accents */
-  --gold-500: #D4AF37;
-  --gold-400: #E5C558;
-  --gold-600: #AA8C2C;
+  /* Primary Brand: Solvera Deep Indigo / Purple */
+  --brand-500: #7354c4;
+  --brand-400: #8c71db;
+  --brand-600: #55359e;
+
+  /* Accent: Solvera Bi-directional Arrow Slate Blue / Teal */
+  --accent-500: #3b82a6;
+  --accent-400: #569ec2;
+  --accent-600: #296482;
   
   /* Status Colors */
   --status-green: #10B981;
   --status-yellow: #F59E0B;
   --status-red: #EF4444;
 
-  /* Card/Surface */
-  --card: #171717;
-  --card-foreground: #ededed;
-  --border: #262626;
+  /* Card/Surface - Subtle cool slate undertone */
+  --card: #11141c;
+  --card-foreground: #f1f3f7;
+  --border: #1e2433;
 }
 
 @theme inline {
@@ -28,9 +33,18 @@
   --color-card-foreground: var(--card-foreground);
   --color-border: var(--border);
   
-  --color-gold-500: var(--gold-500);
-  --color-gold-400: var(--gold-400);
-  --color-gold-600: var(--gold-600);
+  --color-brand-500: var(--brand-500);
+  --color-brand-400: var(--brand-400);
+  --color-brand-600: var(--brand-600);
+
+  --color-accent-500: var(--accent-500);
+  --color-accent-400: var(--accent-400);
+  --color-accent-600: var(--accent-600);
+  
+  /* Backwards-compatible aliases mapping to brand palette */
+  --color-gold-500: var(--brand-500);
+  --color-gold-400: var(--brand-400);
+  --color-gold-600: var(--brand-600);
   
   --font-sans: var(--font-inter);
   --font-serif: var(--font-playfair);

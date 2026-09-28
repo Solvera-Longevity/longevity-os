@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+import Image from "next/image";
+
 const NAV_ITEMS = [
     { label: "Dashboard", href: "/", icon: LayoutDashboard },
     { label: "Timeline", href: "/timeline", icon: History },
@@ -25,11 +27,25 @@ export function Sidebar() {
 
     return (
         <aside className="w-64 border-r border-border bg-card h-screen fixed left-0 top-0 hidden md:flex flex-col z-10 transition-all duration-300">
-            <div className="p-8 pb-4">
-                <h1 className="text-2xl font-serif font-bold text-gold-500 tracking-wider">
-                    SOLVERA
-                </h1>
-                <p className="text-xs text-muted-foreground uppercase tracking-[0.2em] mt-1">Longevity Concierge</p>
+            <div className="p-6 pb-4 border-b border-border/50">
+                <Link href="/" className="flex items-center gap-3">
+                    <div className="relative h-10 w-10 rounded-lg overflow-hidden border border-border shrink-0 bg-white/5">
+                        <Image
+                            src="/solvera-logo.jpg"
+                            alt="Solvera Longevity OS"
+                            fill
+                            className="object-cover"
+                            sizes="40px"
+                            priority
+                        />
+                    </div>
+                    <div>
+                        <h1 className="text-xl font-serif font-bold text-gold-500 tracking-wider leading-tight">
+                            SOLVERA
+                        </h1>
+                        <p className="text-[10px] text-muted-foreground uppercase tracking-[0.2em]">Longevity OS</p>
+                    </div>
+                </Link>
             </div>
 
             <nav className="flex-1 px-4 py-8 space-y-2">

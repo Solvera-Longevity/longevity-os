@@ -55,17 +55,17 @@ export function TimelineChart() {
                         {/* Contextual Lines based on selection */}
                         {selectedMetric === "phenoAge" ? (
                             <>
-                                <Line type="monotone" dataKey="phenoAge" stroke="#D4AF37" strokeWidth={3} name="Biological Age" dot={{ r: 5, fill: "#D4AF37" }} />
-                                <Line type="monotone" dataKey="chronologicalAge" stroke="#666" strokeDasharray="5 5" name="Chronological Age" />
+                                <Line type="monotone" dataKey="phenoAge" stroke="#7354c4" strokeWidth={3} name="Biological Age" dot={{ r: 5, fill: "#7354c4" }} />
+                                <Line type="monotone" dataKey="chronologicalAge" stroke="#3b82a6" strokeDasharray="5 5" name="Chronological Age" dot={{ r: 3, fill: "#3b82a6" }} />
                             </>
                         ) : (
                             <Line
                                 type="monotone"
                                 dataKey={selectedMetric}
-                                stroke="#D4AF37"
+                                stroke="#7354c4"
                                 strokeWidth={3}
                                 name={metrics.find(m => m.id === selectedMetric)?.label}
-                                dot={{ r: 5, fill: "#D4AF37" }}
+                                dot={{ r: 5, fill: "#7354c4" }}
                             />
                         )}
 
