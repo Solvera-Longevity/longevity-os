@@ -18,8 +18,20 @@ An executive clinical intelligence platform and longevity concierge dashboard. S
 - **Levine Phenotypic Aging Engine**: Implements the validated Levine et al. (2018) epigenetic/phenotypic biomarker mortality and aging algorithm, normalizing clinical laboratory units across Albumin, Creatinine, Fasting Glucose, hs-CRP, Lymphocyte %, MCV, RDW, Alkaline Phosphatase, and WBC.
 - **Dynamic Biomarker Classification**: Maps individual patient markers against optimal functional reference intervals with responsive visual threshold bars and state indicators.
 - **Protocol Matching Engine**: Deterministic indexing pipeline cross-referencing out-of-range biomarkers with peer-reviewed clinical trial literature and mechanism-of-action data.
-- **Clinical Decision Support (LLM-Assisted)**: Synthesizes multi-marker interactions into cohesive clinical summaries powered by modern AI SDK abstractions with built-in resilience and offline fallback handling.
-- **Longitudinal Trend Analytics**: Recharts-driven historical tracking visualizing biological vs. chronological aging velocity over time.
+- **Clinician Custom Protocol Authoring**: Enables physicians and clinic directors to curate, save, and catalog bespoke therapeutic interventions and custom compound formulations alongside standard peer-reviewed protocols.
+- **Clinical Decision Support (LLM-Assisted)**: Synthesizes multiple marker interactions into cohesive clinical summaries powered by modern AI SDK abstractions with built in resilience and offline fallback handling.
+- **Longitudinal Trend Analytics**: Recharts driven historical tracking visualizing biological vs. chronological aging velocity over time.
+
+---
+
+## Clinician Formulary & Custom Protocol Authoring
+
+A core requirement for functional medicine practitioners and longevity clinicians is the ability to integrate clinic-specific protocols (e.g. customized peptide stacks, targeted nutraceutical dosing, or proprietary lifestyle therapies) directly into patient care plans.
+
+In Solvera, practitioners can manage their intervention formulary via the **Protocols** hub (`/protocols`):
+- **Peer-Reviewed Reference Library**: Browse established longevity compounds (e.g. Thymosin Alpha-1, Berberine HCL, BPC-157, TUDCA) indexed by biological target, therapeutic class, mechanism of action, and lifestyle synergy.
+- **Custom Protocol Authoring Modal**: Click **"+ Add Custom Protocol"** on `/protocols` to register proprietary interventions directly into the clinic's local formulary. Clinicians specify the compound name, target biomarker, therapeutic class, mechanism of action, evidence grade, and complementary lifestyle synergies.
+- **Immediate Clinical Availability**: Custom protocols immediately badge with `Clinician Custom` and become available within the practitioner's active intervention catalog.
 
 ---
 
@@ -30,7 +42,7 @@ An executive clinical intelligence platform and longevity concierge dashboard. S
 - **Styling**: Tailwind CSS v4 with bespoke luxury/clinical palette tokens
 - **Data Parsing**: PapaParse (structured CSV intake)
 - **Data Visualization**: Recharts
-- **Icons & Typography**: Lucide React, Inter & Playfair Display
+- **Icons & Typography**: Lucide React, Space Grotesk & JetBrains Mono
 
 ---
 
