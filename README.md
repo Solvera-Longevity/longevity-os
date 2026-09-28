@@ -8,8 +8,8 @@ An executive clinical intelligence platform and longevity concierge dashboard. S
 
 > **Important Architecture & Compliance Note:**  
 > This repository represents a focused **Proof of Concept (PoC)** developed for stakeholder demonstration.  
-> Direct parsing of unstructured PDF lab reports (e.g. OCR/unredacted electronic health document ingestion) was intentionally omitted from this milestone. Ingestion of raw medical PDFs introduces Protected Health Information (PHI) handling subject to strict **HIPAA compliance**, Business Associate Agreements (BAAs), and end-to-end data encryption requirements.  
-> To safely validate algorithmic calculations and user experience, data ingestion is designed around structured, de-identified CSV panels (`patient_optimal.csv`, `patient_risk.csv`), ensuring zero PHI exposure during technical demonstrations.
+> - **HIPAA / PHI Boundary**: Direct parsing of unstructured PDF lab reports (e.g. OCR/unredacted electronic health document ingestion) was intentionally omitted from this milestone. Ingestion of raw medical PDFs introduces Protected Health Information (PHI) handling subject to strict **HIPAA compliance**, Business Associate Agreements (BAAs), and end-to-end data encryption requirements. Data ingestion is designed around structured, de-identified CSV panels (`patient_optimal.csv`, `patient_risk.csv`), ensuring zero PHI exposure during technical demonstrations.
+> - **Functional Scope & Architectural Previews**: The primary dashboard (`/`) and clinical formulary (`/protocols`) contain the fully operational algorithmic engine—Levine biological age computation, biomarker classification, deterministic protocol matching, and AI clinical synthesis. Ancillary sections (`/reports`, `/settings`, `/timeline`) serve as interactive architectural previews to illustrate prospective clinic workflows (EHR synchronization, de-identified report archives, and practitioner settings) without requiring mock database backends.
 
 ---
 
@@ -57,8 +57,8 @@ In Solvera, practitioners can manage their intervention formulary via the **Prot
 
 ```bash
 # Clone the repository
-git clone https://github.com/petetheo/solvera.git
-cd solvera
+git clone https://github.com/Solvera-Longevity/longevity-os.git
+cd longevity-os
 
 # Install dependencies
 npm install
@@ -96,10 +96,3 @@ Sample datasets are included in the repository root for validation:
 
 1. **`sample_data/patient_optimal.csv`**: Healthy longevity baseline demonstrating optimal range thresholds and low biological age.
 2. **`sample_data/patient_risk.csv`**: Demonstrates elevated inflammatory and glycemic markers, triggering accelerated biological age alerts and automated protocol lookup.
-
----
-
-## Engineering Standards
-
-- **Linting**: ESLint 9 (`npm run lint`)
-- **Type Checking & Production Build**: Next.js (`npm run build`)
