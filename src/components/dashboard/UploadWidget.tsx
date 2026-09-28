@@ -1,7 +1,6 @@
 "use client";
 
 import { UploadCloud, Loader2 } from "lucide-react";
-import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface UploadWidgetProps {
@@ -42,8 +41,8 @@ export function UploadWidget({ onUpload, isAnalyzing }: UploadWidgetProps) {
                             <UploadCloud className="h-6 w-6" />
                         </div>
                         <h4 className="font-serif text-lg text-foreground mb-1">Upload Lab Report</h4>
-                        <p className="text-xs text-muted-foreground text-center max-w-[200px]">
-                            Drag & drop your PDF or CSV file here to analyze.
+                        <p className="text-xs text-muted-foreground text-center max-w-[220px]">
+                            Upload your laboratory panel CSV (e.g. Quest / LabCorp standardized export).
                         </p>
                     </>
                 )}

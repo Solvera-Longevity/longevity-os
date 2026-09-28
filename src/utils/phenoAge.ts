@@ -2,11 +2,7 @@
  * Phenotypic Age (PhenoAge) Calculator
  * Based on Levine et al. (2018) "An epigenetic biomarker of aging for lifespan and healthspan"
  * 
- * Formula:
- * PhenoAge = 141.50 + ln(-0.00553 * ln(1 - MortalityScore)) / 0.09165
- * MortalityScore = 1 - exp(-exp(xb - 19.907) / 0.00888) -- wait, double check the formula.
- * 
- * Correct Implementation details from standard R implementation:
+ * Linear combination (xb):
  * xb = -19.9067 + 
  *      (0.0336 * Albumin) + 
  *      (0.0095 * Creatinine) + 
@@ -20,6 +16,7 @@
  *      (0.0804 * ChronologicalAge)
  * 
  * Mortality Score (10-year probability of death) = 1 - exp(-exp(xb)) 
+ * PhenoAge = 141.50 + ln(-0.00553 * ln(1 - MortalityScore)) / 0.09165
  * This formula varies slightly in different papers (standardizing units).
  * Levine's original weights were based on:
  * Albumin (g/L) - Note: US is g/dL usually. 1 g/dL = 10 g/L.

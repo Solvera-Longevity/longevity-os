@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { User, Activity } from "lucide-react";
+import { User } from "lucide-react";
 
 interface BiologicalAgeMeterProps {
     chronologicalAge: number;

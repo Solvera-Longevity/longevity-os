@@ -10,10 +10,10 @@ import {
     History,
     Settings,
     FileText,
-    LogOut,
-    Menu,
-    X
+    LogOut
 } from "lucide-react";
+
+import Image from "next/image";
 
 // Duplicated from Sidebar for Mobile Menu
 const NAV_ITEMS = [
@@ -31,9 +31,18 @@ export function Header() {
     return (
         <header className="h-16 border-b border-border bg-background/50 backdrop-blur-md sticky top-0 z-20 flex items-center justify-between px-4 md:px-8 ml-0 md:ml-64 transition-all duration-300">
             <div className="flex items-center gap-3">
-                {/* Mobile Logo Text (Since Sidebar is hidden) */}
-                <div className="md:hidden">
-                    <span className="font-serif font-bold text-gold-500 tracking-wider">SOLVERA</span>
+                {/* Mobile Logo (Since Sidebar is hidden) */}
+                <div className="md:hidden flex items-center gap-2">
+                    <div className="relative h-8 w-8 rounded-md overflow-hidden border border-border shrink-0 bg-white/5">
+                        <Image
+                            src="/solvera-logo.jpg"
+                            alt="Solvera"
+                            fill
+                            className="object-cover"
+                            sizes="32px"
+                        />
+                    </div>
+                    <span className="font-serif font-bold text-gold-500 tracking-wider text-lg">SOLVERA</span>
                 </div>
 
                 {/* Desktop Title */}

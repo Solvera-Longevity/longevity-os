@@ -1,6 +1,6 @@
 "use client";
 
-import { LabResult, MOCK_HISTORY, BiomarkerId } from "@/utils/mockData";
+import { MOCK_HISTORY } from "@/utils/mockData";
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
 import { useState } from "react";
 import RANGES from "@/data/ranges.json";
@@ -39,8 +39,8 @@ export function TimelineChart() {
                 </select>
             </div>
 
-            <div className="h-[400px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
+            <div className="h-[400px] w-full min-h-[300px]">
+                <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={300}>
                     <LineChart data={data}>
                         <CartesianGrid strokeDasharray="3 3" stroke="#333" />
                         <XAxis dataKey="date" stroke="#666" fontSize={12} tickFormatter={(val) => new Date(val).toLocaleDateString()} />
@@ -70,9 +70,9 @@ export function TimelineChart() {
                         )}
 
                         {/* If simple metric and has ranges, maybe show reference lines? 
-                Recharts ReferenceLine is good but ranges might vary. 
-                Keeping it simple for MVP.
-            */}
+                        Recharts ReferenceLine is good but ranges might vary. 
+                        Keeping it simple for MVP.
+                        */}
                     </LineChart>
                 </ResponsiveContainer>
             </div>
