@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
-import { ArrowDown, ArrowUp, Minus, CheckCircle, AlertTriangle, AlertCircle, ChevronDown, ChevronUp, Pill, BookOpen, ShieldAlert } from "lucide-react";
+import { ChevronDown, ChevronUp, Pill, BookOpen } from "lucide-react";
 import { useState, useEffect } from "react";
-import ReactMarkdown from "react-markdown";
 
 interface Thresholds {
     green: { min?: number; max?: number };
@@ -32,11 +31,10 @@ interface BiomarkerCardProps {
     value: number;
     unit: string;
     thresholds: Thresholds;
-    category?: string;
     sliderConfig?: { min?: number; max?: number };
 }
 
-export function BiomarkerCard({ label, value, unit, thresholds, category, sliderConfig }: BiomarkerCardProps) {
+export function BiomarkerCard({ label, value, unit, thresholds, sliderConfig }: BiomarkerCardProps) {
     const [protocol, setProtocol] = useState<ProtocolMatch | null>(null);
     const [isExpanded, setIsExpanded] = useState(false);
     const [loadingProtocol, setLoadingProtocol] = useState(false);
@@ -54,42 +52,59 @@ export function BiomarkerCard({ label, value, unit, thresholds, category, slider
     else if (inRange(value, thresholds.yellow)) status = "yellow";
     else status = "red";
 
-    // Fetch protocol if out of RANGE (yellow OR red)
+    // Fetch protocol when biomarker is out of range
     useEffect(() => {
-        if (status !== "green" && !protocol && !loadingProtocol) {
+        if (status === "green") return;
+
+        let isMounted = true;
+
+        async function fetchProtocol() {
             setLoadingProtocol(true);
-            fetch('/api/protocols', { method: 'POST', body: JSON.stringify({ marker: label }) })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.protocol) {
+            try {
+                const res = await fetch('/api/protocols', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ marker: label })
+                });
+                const data = await res.json();
+                if (isMounted) {
+                    if (data?.protocol) {
                         setProtocol(data.protocol);
                     } else {
-                        // Fallback if no specific protocol found
                         setProtocol({
                             condition: "Observation",
-                            peptide: "Monitor & Consult",
-                            mechanism: "Value is outside optimal range. No specific protocol indexed.",
+                            peptide: "Clinical Evaluation Recommended",
+                            mechanism: "Marker is outside optimal longevity threshold. No automated protocol indexed.",
                             dosing: { dose: "N/A", frequency: "N/A", route: "N/A", duration: "N/A" },
-                            safety: { cautions: "Consult clinician.", source: "" },
+                            safety: { cautions: "Consult a qualified medical provider.", source: "" },
                             source: "General"
                         });
                     }
-                    setLoadingProtocol(false);
-                })
-                .catch(() => {
-                    // Start fallback on error too
+                }
+            } catch {
+                if (isMounted) {
                     setProtocol({
                         condition: "Observation",
-                        peptide: "Monitor & Consult",
-                        mechanism: "Value is outside optimal range. No specific protocol indexed.",
+                        peptide: "Clinical Evaluation Recommended",
+                        mechanism: "Marker is outside optimal longevity threshold. No automated protocol indexed.",
                         dosing: { dose: "N/A", frequency: "N/A", route: "N/A", duration: "N/A" },
-                        safety: { cautions: "Consult clinician.", source: "" },
+                        safety: { cautions: "Consult a qualified medical provider.", source: "" },
                         source: "General"
                     });
+                }
+            } finally {
+                if (isMounted) {
                     setLoadingProtocol(false);
-                });
+                }
+            }
         }
-    }, [status, label, protocol, loadingProtocol]);
+
+        fetchProtocol();
+
+        return () => {
+            isMounted = false;
+        };
+    }, [status, label]);
 
     // Range Visualization Logic
     // We need a display range. 
@@ -169,7 +184,9 @@ export function BiomarkerCard({ label, value, unit, thresholds, category, slider
                 {/* Footer Actions (Always Render for Uniformity) */}
                 <div className="flex justify-end mt-2 pt-2 border-t border-dashed border-white/5 h-[40px] items-center">
                     {!isOptimal ? (
-                        protocol ? (
+                        loadingProtocol ? (
+                            <span className="text-[10px] text-muted-foreground animate-pulse">Evaluating protocol...</span>
+                        ) : protocol ? (
                             <button
                                 onClick={(e) => {
                                     e.stopPropagation();
@@ -180,12 +197,9 @@ export function BiomarkerCard({ label, value, unit, thresholds, category, slider
                                 {isExpanded ? "Hide Protocol" : "View Protocol"}
                                 {isExpanded ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
                             </button>
-                        ) : (
-                            // Loading State
-                            <span className="text-[10px] text-muted-foreground animate-pulse">Checking protocol...</span>
-                        )
+                        ) : null
                     ) : (
-                        // Ghost button for spacing (Optimal cards)
+                        // Placeholder spacer for layout alignment
                         <div className="text-xs flex items-center gap-1 font-medium border border-transparent px-2 py-1 opacity-0 pointer-events-none">
                             View Protocol
                         </div>
