@@ -45,10 +45,7 @@ export function Header() {
                     <span className="font-serif font-bold text-gold-500 tracking-wider text-lg">SOLVERA</span>
                 </div>
 
-                {/* Desktop Title */}
-                <div className="hidden md:block">
-                    <h2 className="text-sm font-medium text-muted-foreground">My Health & Longevity</h2>
-                </div>
+
             </div>
 
             <div className="relative">
@@ -57,7 +54,7 @@ export function Header() {
                     className="flex items-center gap-4 focus:outline-none group"
                 >
                     <div className="text-right hidden sm:block group-hover:opacity-80 transition-opacity">
-                        <p className="text-sm font-medium text-foreground">Dr. Peter Theo</p>
+                        <p className="text-sm font-medium text-foreground">Dr. Pete Theo</p>
                         <p className="text-xs text-muted-foreground">Premium Member</p>
                     </div>
                     <div className={cn(

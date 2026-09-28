@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { UploadWidget } from "@/components/dashboard/UploadWidget";
 import { BiologicalAgeMeter } from "@/components/dashboard/BiologicalAgeMeter";
 import { DashboardGrid } from "@/components/dashboard/DashboardGrid";
-import { LabResult } from "@/utils/mockData";
+import { LabResult, getLatestResult } from "@/utils/mockData";
 import { calculatePhenoAge, PhenoAgeInputs } from "@/utils/phenoAge";
 import Papa from "papaparse";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, UploadCloud, RefreshCw } from "lucide-react";
 import Link from "next/link";
 import { AIRecommendations } from "@/components/dashboard/AIRecommendations";
 import mockRanges from "@/data/ranges.json";
@@ -33,10 +33,66 @@ interface OutlierResult {
 }
 
 const ranges = mockRanges as RangeDefinition[];
+const SESSION_STORAGE_KEY = "solvera_active_lab_result";
+
+function subscribeToSession(callback: () => void) {
+  window.addEventListener("storage", callback);
+  window.addEventListener("solvera-panel-change", callback);
+  return () => {
+    window.removeEventListener("storage", callback);
+    window.removeEventListener("solvera-panel-change", callback);
+  };
+}
+
+function getSessionSnapshot(): string {
+  try {
+    return sessionStorage.getItem(SESSION_STORAGE_KEY) || "";
+  } catch {
+    return "";
+  }
+}
+
+function getSessionServerSnapshot(): string {
+  return "";
+}
 
 export default function Home() {
-  const [data, setData] = useState<LabResult | null>(null);
+  const sessionDataRaw = useSyncExternalStore(
+    subscribeToSession,
+    getSessionSnapshot,
+    getSessionServerSnapshot
+  );
+
+  const [uploadedData, setUploadedData] = useState<LabResult | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [isUploadingNew, setIsUploadingNew] = useState(false);
+
+  // Compute active data: local uploaded state > synchronized session storage > default baseline
+  const data: LabResult = uploadedData || (() => {
+    if (sessionDataRaw) {
+      try {
+        const parsed = JSON.parse(sessionDataRaw);
+        if (parsed?.id) return parsed;
+      } catch {
+        // ignore parse error
+      }
+    }
+    return getLatestResult();
+  })();
+
+  const updateActiveData = (result: LabResult | null) => {
+    setUploadedData(result);
+    try {
+      if (result) {
+        sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(result));
+      } else {
+        sessionStorage.removeItem(SESSION_STORAGE_KEY);
+      }
+      window.dispatchEvent(new Event("solvera-panel-change"));
+    } catch (err) {
+      console.warn("Unable to persist to sessionStorage:", err);
+    }
+  };
 
   // Normalize key helper
   const normalizeKey = (k: string) => k.toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -155,8 +211,9 @@ export default function Home() {
         };
 
         setTimeout(() => {
-          setData(newResult);
+          updateActiveData(newResult);
           setIsAnalyzing(false);
+          setIsUploadingNew(false);
         }, 600);
       }
     });
@@ -209,32 +266,56 @@ export default function Home() {
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
-      <div className="flex justify-between items-end">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-serif text-foreground mb-2">Biomarker Assessment</h1>
-          <p className="text-muted-foreground">Comprehensive longevity profile, biological age calculation, and targeted clinical interventions.</p>
+          <h1 className="text-3xl font-serif text-foreground mb-1">Biomarker Assessment</h1>
+          <p className="text-sm text-muted-foreground">Comprehensive longevity profile, biological age calculation, and targeted clinical interventions.</p>
         </div>
-        {data && (
-          <div className="text-sm text-muted-foreground">
-            Report Date: <span className="font-mono text-foreground">{data.date}</span>
+        {data && !isUploadingNew && (
+          <div className="flex items-center gap-3">
+            <div className="text-xs text-muted-foreground bg-card border border-border px-3 py-1.5 rounded-lg font-mono">
+              Report: <span className="text-foreground font-semibold">{data.date}</span>
+            </div>
+            <button
+              onClick={() => setIsUploadingNew(true)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border border-border hover:border-brand-500/30 bg-card hover:bg-brand-500/10 text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <UploadCloud className="h-3.5 w-3.5 text-brand-400" />
+              <span>Upload Different Panel</span>
+            </button>
           </div>
         )}
       </div>
 
-      {!data ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
-          <div className="bg-card p-8 rounded-2xl border border-border">
-            <h2 className="text-2xl font-serif mb-4 text-gold-500">Solvera Longevity OS</h2>
-            <p className="text-muted-foreground mb-6 leading-relaxed">
-              Upload standardized laboratory biomarker data to compute phenotypic age using the validated Levine model,
-              identify out-of-range clinical endpoints, and surface evidence-based therapeutic options.
-            </p>
-            <div className="flex items-center gap-2 text-sm text-gold-500/80">
-              <span>Levine Phenotypic Aging Engine • Structured CSV Intake</span>
+      {(!data || isUploadingNew) ? (
+        <div className="space-y-4">
+          {data && isUploadingNew && (
+            <div className="flex justify-end">
+              <button
+                onClick={() => setIsUploadingNew(false)}
+                className="text-xs text-muted-foreground hover:text-foreground font-mono underline"
+              >
+                ← Return to active panel ({data.patientName})
+              </button>
             </div>
-          </div>
-          <div className="h-64">
-            <UploadWidget onUpload={handleUpload} isAnalyzing={isAnalyzing} />
+          )}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
+            <div className="bg-card p-8 rounded-2xl border border-border flex flex-col justify-between">
+              <div>
+                <h2 className="text-2xl font-serif mb-4 text-brand-400">Solvera Longevity OS</h2>
+                <p className="text-muted-foreground mb-6 leading-relaxed text-sm">
+                  Upload standardized laboratory biomarker data to compute phenotypic age using the validated Levine model,
+                  identify out-of-range clinical endpoints, and surface evidence-based therapeutic options.
+                </p>
+              </div>
+              <div className="flex items-center gap-2 text-xs text-muted-foreground font-mono">
+                <RefreshCw className="h-3.5 w-3.5 text-accent-400" />
+                <span>Levine Phenotypic Aging Engine • Structured CSV Intake</span>
+              </div>
+            </div>
+            <div className="h-64">
+              <UploadWidget onUpload={handleUpload} isAnalyzing={isAnalyzing} />
+            </div>
           </div>
         </div>
       ) : (
@@ -247,7 +328,7 @@ export default function Home() {
               gender={data.gender}
             />
             <div className="flex justify-end mt-4">
-              <Link href="/timeline" className="text-sm font-medium text-gold-500 hover:text-gold-400 flex items-center gap-2 transition-colors">
+              <Link href="/timeline" className="text-sm font-medium text-brand-400 hover:text-brand-300 flex items-center gap-2 transition-colors">
                 View Historical Trends <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -256,8 +337,8 @@ export default function Home() {
           <DashboardGrid data={data} />
 
           <div className="mt-12 mb-20">
-            <h2 className="text-2xl font-serif text-gold-500 mb-6 flex items-center gap-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-gold-500"></span>
+            <h2 className="text-2xl font-serif text-brand-400 mb-6 flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-brand-500"></span>
               Clinical Decision Support
             </h2>
             <div className="h-96">
